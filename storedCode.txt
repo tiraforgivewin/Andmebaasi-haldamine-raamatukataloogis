@@ -1,0 +1,95 @@
+connection.commit()
+cursor.execute('''
+INSERT INTO 
+Autorid (autor_nimi, sünnikuupäev) 
+VALUES 
+('Gerald Malcolm Durrell', '08.01.1925'),
+('Ray Douglas Bradbury', '22.08.1920'),
+('John Michael Crichton', '23.10.1942'),
+('Kir Bulõtðev (Igor Vsevolodovitð Moðeiko)', '18.10.1932'),
+('Agatha Christie', '15.09.1890'),
+('Els de Groen', '23.12.1949'),
+('George Alexander Graham Adamson', '03.02.1906')
+''')
+
+
+cursor.execute('''
+INSERT INTO 
+Zanrid (zanri_nimi) 
+VALUES 
+('autobiograafia'),
+('novell'),
+('funktsiooniartikkel'),
+('luuletus'),
+('lugu'),
+('mängida'),
+('romaan'),
+('eepiline'),
+('komöödia'),
+('paroodiatragöödia'),
+('draama'),
+('õudus'),
+('eepiline'),
+('muinasjutt'),
+('ballaad'),
+('müüt'),
+('lüüriline')
+''')
+
+
+cursor.execute('''
+INSERT INTO 
+ Raamatud (pealkiri, väljaandmise_kuupäev, autor_id, zanr_id) 
+VALUES 
+('Kadunud Maailm','1995', 3, 5)
+''')
+
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS Autorid(
+autor_id INTEGER PRIMARY KEY,
+autor_nimi TEXT NOT NULL,
+sünnikuupäev TEXT
+)
+''')
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS Zanrid(
+zanr_id INTEGER PRIMARY KEY,
+zanri_nimi TEXT NOT NULL
+)
+''')
+
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS Raamatud(
+raamat_id INTEGER PRIMARY KEY,
+pealkiri TEXT NOT NULL,
+väljaandmise_kuupäev text not null,
+autor_id INTEGER,
+zanr_id INTEGER,
+foreign key (autor_id) references Autorid(autor_id),
+foreign key (zanr_id) references Zanrid(zanr_id)
+)
+''')
+
+
+cursor.execute('SELECT * FROM Autorid')
+data = cursor.fetchall()
+
+for user in data:
+  print(user)
+
+cursor.execute('SELECT * FROM Raamatud')
+data = cursor.fetchall()
+
+for user in data:
+  print(user)
+
+cursor.execute('SELECT * FROM Zanrid')
+data = cursor.fetchall()
+
+for user in data:
+  print(user)
+
+connection.close()
